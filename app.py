@@ -109,10 +109,11 @@ if page == "📊 Dashboard":
     with center:
         st.markdown("</div>", unsafe_allow_html=True)
         st.markdown("### 🌐 Digital Twin Core")
-        st.image(
-            "https://via.placeholder.com/900x450/0b0f1a/00ffd5?text=Digital+Twin+Simulation",
-            use_container_width=True
-        )
+         map_data = {
+        "lat": [21.3891, 21.3895, 21.3899],
+        "lon": [39.8579, 39.8583, 39.8587]
+    }
+    st.map(map_data)
         st.markdown("""
         **Simulation Engine:** Unity / Gazebo  
         **Control Layer:** ROS  
@@ -173,5 +174,6 @@ else:
 # --------------------------------------------------
 st.markdown("---")
 st.markdown("**Crisis Spiders | Digital Twin Research Platform**")
+
 
 
