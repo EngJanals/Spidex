@@ -115,7 +115,7 @@ if page == "Dashboard":
 
     # ROBOT TELEMETRY
     with right:
-        st.markdown("### 📡 Robot Telemetry")
+        st.markdown("### Robot Telemetry")
         st.write("Battery Level")
         st.progress(twin["battery"])
         st.write("System Health")
@@ -166,5 +166,6 @@ else:
 # --------------------------------------------------
 st.markdown("---")
 st.markdown("**Crisis Spiders | Digital Twin Research Platform**")
+
 
 
