@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# FUTURISTIC UI STYLE
+# UI STYLE (FIXED BOX RENDERING)
 # --------------------------------------------------
 st.markdown("""
 <style>
@@ -20,14 +20,27 @@ st.markdown("""
     background: linear-gradient(135deg, #0b0f1a, #12182b);
     color: #ffffff;
 }
+
 .card {
+    display: inline-block;
+    width: 100%;
+    height: auto;
     background: rgba(255,255,255,0.05);
     border: 1px solid #00ffd5;
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 20px;
+    margin-bottom: 20px;
 }
-h1, h2, h3 {
+
+h1, h2, h3, h4 {
     color: #00ffd5;
+}
+
+div[data-testid="metric-container"] {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,255,213,0.4);
+    padding: 14px;
+    border-radius: 14px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -49,7 +62,7 @@ with st.sidebar:
     st.markdown("System Status: **ONLINE**")
 
 # --------------------------------------------------
-# DIGITAL TWIN STATE (SIMULATED)
+# DIGITAL TWIN DATA
 # --------------------------------------------------
 digital_twin = {
     "Spidex": {"battery": 0.84, "signal": 120, "health": 0.95},
@@ -58,27 +71,27 @@ digital_twin = {
 }
 
 # ==================================================
-# DASHBOARD PAGE
+# DASHBOARD
 # ==================================================
 if page == "📊 Dashboard":
 
     selected_robot = st.selectbox(
         "Select Spider",
-        ["Spidex", "Geopider", "Neopider"]
+        list(digital_twin.keys())
     )
 
     twin = digital_twin[selected_robot]
 
-    st.title("🧠 Digital Twin & AI Monitoring Dashboard")
-    st.markdown(f"### Active Twin: **{selected_robot}**")
+    st.title(f"🧠 Active Twin: {selected_robot}")
 
-    # ---------------- TOP METRICS ----------------
+    # ---------------- METRICS ----------------
     m1, m2, m3, m4 = st.columns(4)
-
     m1.metric("Battery", f"{int(twin['battery']*100)}%")
     m2.metric("Signal Latency", f"{twin['signal']} ms")
     m3.metric("System Health", f"{int(twin['health']*100)}%")
     m4.metric("AI Status", "Stable")
+
+    st.markdown("---")
 
     # ---------------- MAIN GRID ----------------
     left, center, right = st.columns([1.2, 2.6, 1.2])
@@ -92,16 +105,14 @@ if page == "📊 Dashboard":
         st.metric("Prediction Confidence", "97%")
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # DIGITAL TWIN
+    # DIGITAL TWIN CORE
     with center:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🌐 Digital Twin Core")
-
         st.image(
             "https://via.placeholder.com/900x450/0b0f1a/00ffd5?text=Digital+Twin+Simulation",
             use_container_width=True
         )
-
         st.markdown("""
         **Simulation Engine:** Unity / Gazebo  
         **Control Layer:** ROS  
@@ -120,7 +131,7 @@ if page == "📊 Dashboard":
         st.write(f"Signal Latency: {twin['signal']} ms")
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # ---------------- AI CHARTS ----------------
+    # ---------------- CHARTS ----------------
     st.markdown("## 📊 AI & Sensor Trends")
 
     df = pd.DataFrame({
@@ -148,14 +159,14 @@ else:
         ("Wasan Fayez Al-Thubaiti", "s44201077@students.tu.edu.sa"),
     ]
 
-    col1, col2 = st.columns(2)
+    c1, c2 = st.columns(2)
 
     for i, (name, email) in enumerate(team_list):
-        with col1 if i % 2 == 0 else col2:
+        with c1 if i % 2 == 0 else c2:
             st.markdown(f"""
             <div class='card'>
-                <h4 style='margin:0;'>{name}</h4>
-                <p style='margin:0; color:#bbb; font-size:0.85em;'>{email}</p>
+                <h4 style='margin:0'>{name}</h4>
+                <p style='margin:0;color:#bbb;font-size:0.85em'>{email}</p>
             </div>
             """, unsafe_allow_html=True)
 
