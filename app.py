@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import time
 
 # --------------------------------------------------
 # PAGE CONFIG
@@ -41,9 +40,9 @@ with st.sidebar:
     st.markdown("### Digital Twin Control Room")
     st.markdown("---")
 
-    selected_robot = st.selectbox(
-        "Select Spider",
-        ["Spidex", "Geopider", "Neopider"]
+    page = st.radio(
+        "Navigation",
+        ["📊 Dashboard", "👥 Team"]
     )
 
     st.markdown("---")
@@ -58,89 +57,107 @@ digital_twin = {
     "Neopider": {"battery": 0.78, "signal": 80, "health": 0.91},
 }
 
-twin = digital_twin[selected_robot]
+# ==================================================
+# DASHBOARD PAGE
+# ==================================================
+if page == "📊 Dashboard":
 
-# --------------------------------------------------
-# HEADER
-# --------------------------------------------------
-st.title("🧠 Digital Twin & AI Monitoring Dashboard")
-st.markdown(f"### Active Twin: **{selected_robot}**")
-
-# --------------------------------------------------
-# TOP METRICS
-# --------------------------------------------------
-m1, m2, m3, m4 = st.columns(4)
-
-m1.metric("Battery", f"{int(twin['battery']*100)}%")
-m2.metric("Signal Latency", f"{twin['signal']} ms")
-m3.metric("System Health", f"{int(twin['health']*100)}%")
-m4.metric("AI Status", "Stable")
-
-# --------------------------------------------------
-# MAIN GRID
-# --------------------------------------------------
-left, center, right = st.columns([1.2, 2.6, 1.2])
-
-# ---------------- LEFT: AI DATA ----------------
-with left:
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.markdown("### 🤖 AI Analytics")
-
-    st.metric("Inference Rate", "42 FPS")
-    st.metric("Anomaly Score", "0.03")
-    st.metric("Prediction Confidence", "97%")
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# ---------------- CENTER: DIGITAL TWIN ----------------
-with center:
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.markdown("### 🌐 Digital Twin Core")
-
-    st.image(
-        "https://via.placeholder.com/900x450/0b0f1a/00ffd5?text=Digital+Twin+Simulation",
-        use_container_width=True
+    selected_robot = st.selectbox(
+        "Select Spider",
+        ["Spidex", "Geopider", "Neopider"]
     )
 
-    st.markdown("""
-    **Simulation Engine:** Unity / Gazebo  
-    **Control Layer:** ROS  
-    **Visualization:** Streamlit  
-    """)
+    twin = digital_twin[selected_robot]
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.title("🧠 Digital Twin & AI Monitoring Dashboard")
+    st.markdown(f"### Active Twin: **{selected_robot}**")
 
-# ---------------- RIGHT: ROBOT STATUS ----------------
-with right:
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.markdown("### 📡 Robot Telemetry")
+    # ---------------- TOP METRICS ----------------
+    m1, m2, m3, m4 = st.columns(4)
 
-    st.write("Battery Level")
-    st.progress(twin["battery"])
+    m1.metric("Battery", f"{int(twin['battery']*100)}%")
+    m2.metric("Signal Latency", f"{twin['signal']} ms")
+    m3.metric("System Health", f"{int(twin['health']*100)}%")
+    m4.metric("AI Status", "Stable")
 
-    st.write("System Health")
-    st.progress(twin["health"])
+    # ---------------- MAIN GRID ----------------
+    left, center, right = st.columns([1.2, 2.6, 1.2])
 
-    st.write(f"Signal Latency: {twin['signal']} ms")
+    # AI ANALYTICS
+    with left:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.markdown("### 🤖 AI Analytics")
+        st.metric("Inference Rate", "42 FPS")
+        st.metric("Anomaly Score", "0.03")
+        st.metric("Prediction Confidence", "97%")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    # DIGITAL TWIN
+    with center:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.markdown("### 🌐 Digital Twin Core")
 
-# --------------------------------------------------
-# AI TIME-SERIES DATA
-# --------------------------------------------------
-st.markdown("## 📊 AI & Sensor Trends")
+        st.image(
+            "https://via.placeholder.com/900x450/0b0f1a/00ffd5?text=Digital+Twin+Simulation",
+            use_container_width=True
+        )
 
-time_axis = np.arange(50)
-ai_data = np.random.normal(0.6, 0.05, 50)
-sensor_data = np.random.normal(0.4, 0.04, 50)
+        st.markdown("""
+        **Simulation Engine:** Unity / Gazebo  
+        **Control Layer:** ROS  
+        **Visualization:** Streamlit  
+        """)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-df = pd.DataFrame({
-    "Time": time_axis,
-    "AI Confidence": ai_data,
-    "Sensor Fusion Score": sensor_data
-})
+    # ROBOT TELEMETRY
+    with right:
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.markdown("### 📡 Robot Telemetry")
+        st.write("Battery Level")
+        st.progress(twin["battery"])
+        st.write("System Health")
+        st.progress(twin["health"])
+        st.write(f"Signal Latency: {twin['signal']} ms")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-st.line_chart(df.set_index("Time"))
+    # ---------------- AI CHARTS ----------------
+    st.markdown("## 📊 AI & Sensor Trends")
+
+    df = pd.DataFrame({
+        "AI Confidence": np.random.normal(0.6, 0.05, 50),
+        "Sensor Fusion Score": np.random.normal(0.4, 0.04, 50)
+    })
+
+    st.line_chart(df)
+
+# ==================================================
+# TEAM PAGE
+# ==================================================
+else:
+    st.title("👥 Crisis Spiders Team")
+    st.markdown("### Development & Engineering Unit")
+
+    team_list = [
+        ("Manar Mohammed Al-Tuwairqi", "s44208057@students.tu.edu.sa"),
+        ("Jana Mohammed Al-Sufyani", "s44251378@students.tu.edu.sa"),
+        ("Abrar Mohammed Al-Buqami", "s44204498@students.tu.edu.sa"),
+        ("Shehana Sulaiman Al-Juaid", "s44201849@students.tu.edu.sa"),
+        ("Sumayah Abdullah Al-Malki", "s44201735@students.tu.edu.sa"),
+        ("Huda Mohammed Al-Buqami", "s44200812@students.tu.edu.sa"),
+        ("Dareen Aali Al-Ghamdi", "s44204996@students.tu.edu.sa"),
+        ("Wasan Fayez Al-Thubaiti", "s44201077@students.tu.edu.sa"),
+    ]
+
+    col1, col2 = st.columns(2)
+
+    for i, (name, email) in enumerate(team_list):
+        with col1 if i % 2 == 0 else col2:
+            st.markdown(f"""
+            <div class='card'>
+                <h4 style='margin:0;'>{name}</h4>
+                <p style='margin:0; color:#bbb; font-size:0.85em;'>{email}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
 # --------------------------------------------------
 # FOOTER
