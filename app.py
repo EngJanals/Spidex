@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# UI STYLE (FIXED BOX RENDERING)
+# UI STYLE
 # --------------------------------------------------
 st.markdown("""
 <style>
@@ -24,7 +24,6 @@ st.markdown("""
 .card {
     display: inline-block;
     width: 100%;
-    height: auto;
     background: rgba(255,255,255,0.05);
     border: 1px solid #00ffd5;
     border-radius: 18px;
@@ -53,10 +52,7 @@ with st.sidebar:
     st.markdown("### Digital Twin Control Room")
     st.markdown("---")
 
-    page = st.radio(
-        "Navigation",
-        ["📊 Dashboard", "👥 Team"]
-    )
+    page = st.radio("Navigation", ["📊 Dashboard", "👥 Team"])
 
     st.markdown("---")
     st.markdown("System Status: **ONLINE**")
@@ -75,11 +71,7 @@ digital_twin = {
 # ==================================================
 if page == "📊 Dashboard":
 
-    selected_robot = st.selectbox(
-        "Select Spider",
-        list(digital_twin.keys())
-    )
-
+    selected_robot = st.selectbox("Select Spider", list(digital_twin.keys()))
     twin = digital_twin[selected_robot]
 
     st.title(f"🧠 Active Twin: {selected_robot}")
@@ -98,37 +90,41 @@ if page == "📊 Dashboard":
 
     # AI ANALYTICS
     with left:
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🤖 AI Analytics")
         st.metric("Inference Rate", "42 FPS")
         st.metric("Anomaly Score", "0.03")
         st.metric("Prediction Confidence", "97%")
-        
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # DIGITAL TWIN CORE
     with center:
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🌐 Digital Twin Core")
-         map_data = {
-        "lat": [21.3891, 21.3895, 21.3899],
-        "lon": [39.8579, 39.8583, 39.8587]
-    }
-    st.map(map_data)
+
+        map_df = pd.DataFrame({
+            "lat": [21.3891, 21.3895, 21.3899],
+            "lon": [39.8579, 39.8583, 39.8587]
+        })
+        st.map(map_df)
+
         st.markdown("""
         **Simulation Engine:** Unity / Gazebo  
         **Control Layer:** ROS  
         **Visualization:** Streamlit  
         """)
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # ROBOT TELEMETRY
     with right:
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 📡 Robot Telemetry")
         st.write("Battery Level")
         st.progress(twin["battery"])
         st.write("System Health")
         st.progress(twin["health"])
         st.write(f"Signal Latency: {twin['signal']} ms")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     # ---------------- CHARTS ----------------
     st.markdown("## 📊 AI & Sensor Trends")
@@ -159,7 +155,6 @@ else:
     ]
 
     c1, c2 = st.columns(2)
-
     for i, (name, email) in enumerate(team_list):
         with c1 if i % 2 == 0 else c2:
             st.markdown(f"""
@@ -174,6 +169,3 @@ else:
 # --------------------------------------------------
 st.markdown("---")
 st.markdown("**Crisis Spiders | Digital Twin Research Platform**")
-
-
-
