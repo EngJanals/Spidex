@@ -98,7 +98,6 @@ if page == "📊 Dashboard":
 
     # AI ANALYTICS
     with left:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🤖 AI Analytics")
         st.metric("Inference Rate", "42 FPS")
         st.metric("Anomaly Score", "0.03")
@@ -107,7 +106,6 @@ if page == "📊 Dashboard":
 
     # DIGITAL TWIN CORE
     with center:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 🌐 Digital Twin Core")
         st.image(
             "https://via.placeholder.com/900x450/0b0f1a/00ffd5?text=Digital+Twin+Simulation",
@@ -122,7 +120,6 @@ if page == "📊 Dashboard":
 
     # ROBOT TELEMETRY
     with right:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
         st.markdown("### 📡 Robot Telemetry")
         st.write("Battery Level")
         st.progress(twin["battery"])
@@ -175,3 +172,4 @@ else:
 # --------------------------------------------------
 st.markdown("---")
 st.markdown("**Crisis Spiders | Digital Twin Research Platform**")
+
