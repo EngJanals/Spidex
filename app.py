@@ -52,7 +52,7 @@ with st.sidebar:
     st.markdown("### Digital Twin Control Room")
     st.markdown("---")
 
-    page = st.radio("Navigation", ["📊 Dashboard", "👥 Team"])
+    page = st.radio("Navigation", ["Dashboard", "Team"])
 
     st.markdown("---")
     st.markdown("System Status: **ONLINE**")
@@ -69,12 +69,12 @@ digital_twin = {
 # ==================================================
 # DASHBOARD
 # ==================================================
-if page == "📊 Dashboard":
+if page == "Dashboard":
 
     selected_robot = st.selectbox("Select Spider", list(digital_twin.keys()))
     twin = digital_twin[selected_robot]
 
-    st.title(f"🧠 Active Twin: {selected_robot}")
+    st.title(f"Active Twin: {selected_robot}")
 
     # ---------------- METRICS ----------------
     m1, m2, m3, m4 = st.columns(4)
@@ -91,16 +91,16 @@ if page == "📊 Dashboard":
     # AI ANALYTICS
     with left:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.markdown("### 🤖 AI Analytics")
+        st.markdown("### AI Analytics")
         st.metric("Inference Rate", "42 FPS")
         st.metric("Anomaly Score", "0.03")
         st.metric("Prediction Confidence", "97%")
-        st.markdown("</div>", unsafe_allow_html=True)
+       
 
     # DIGITAL TWIN CORE
     with center:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.markdown("### 🌐 Digital Twin Core")
+        st.markdown("### Digital Twin Core")
 
         map_df = pd.DataFrame({
             "lat": [21.3891, 21.3895, 21.3899],
@@ -113,7 +113,7 @@ if page == "📊 Dashboard":
         **Control Layer:** ROS  
         **Visualization:** Streamlit  
         """)
-        st.markdown("</div>", unsafe_allow_html=True)
+        
 
     # ROBOT TELEMETRY
     with right:
@@ -124,10 +124,10 @@ if page == "📊 Dashboard":
         st.write("System Health")
         st.progress(twin["health"])
         st.write(f"Signal Latency: {twin['signal']} ms")
-        st.markdown("</div>", unsafe_allow_html=True)
+        
 
     # ---------------- CHARTS ----------------
-    st.markdown("## 📊 AI & Sensor Trends")
+    st.markdown("## AI & Sensor Trends")
 
     df = pd.DataFrame({
         "AI Confidence": np.random.normal(0.6, 0.05, 50),
@@ -140,7 +140,7 @@ if page == "📊 Dashboard":
 # TEAM PAGE
 # ==================================================
 else:
-    st.title("👥 Crisis Spiders Team")
+    st.title("Crisis Spiders Team")
     st.markdown("### Development & Engineering Unit")
 
     team_list = [
@@ -169,3 +169,4 @@ else:
 # --------------------------------------------------
 st.markdown("---")
 st.markdown("**Crisis Spiders | Digital Twin Research Platform**")
+
